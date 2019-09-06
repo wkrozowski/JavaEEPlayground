@@ -21,7 +21,7 @@ class Lang {
      * Hibernate uses it.
      */
     @SuppressWarnings("unused")
-    Lang() {
+    public Lang() {
 
     }
     Lang(Integer id, String welcomeMessage, String code) {
