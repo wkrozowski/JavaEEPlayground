@@ -15,7 +15,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
         var mockRepository = getMockRepository();
         var service = new HelloService(mockRepository);
         String result = service.prepareGreeting(null, "-1");
-        String expected = "Hello " + HelloService.FALLBACK_NAME+"!";
+        String expected = HelloService.FALLBACK_LANG.getWelcomeMessage() + " " + HelloService.FALLBACK_NAME+"!";
         assertEquals(result, expected);
     }
 
@@ -33,7 +33,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
         var mockRepository = getMockRepository();
         var service = new HelloService(mockRepository);
         String result = service.prepareGreeting("test", "-1");
-        String expected = "Hello test!";
+        String expected = HelloService.FALLBACK_LANG.getWelcomeMessage() + " test!";
         assertEquals(result, expected);
     }
 
@@ -65,6 +65,20 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
         var service = new HelloService(mockRepository);
         String result = service.prepareGreeting(null, "abc");
         String expected = FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME+"!";
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void test_prepareGreeting_nonExistingLang_returnsGreetingWithFallbackLang() {
+        var mockRepository = new LangRepository() {
+            @Override
+            Optional<Lang> findById(Long id) {
+                return Optional.empty();
+            }
+        };
+        var service = new HelloService(mockRepository);
+        String result = service.prepareGreeting(null, "2");
+        String expected = HelloService.FALLBACK_LANG.getWelcomeMessage() + " " + HelloService.FALLBACK_NAME+"!";
         assertEquals(result, expected);
     }
     
