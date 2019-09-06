@@ -2,23 +2,70 @@ package io.github.wkr1u18;
 
 
 import org.junit.Test;
+
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 
 public class HelloServiceTest {
-    private HelloService service = new HelloService();
-
+private final static String WELCOME= "Hello";
+private final static String FALLBACK_ID_WELCOME = "Hola";
     @Test
-    public void test_prepareGreeting_null_returnsFallbackValue() {
-        String result = service.prepareGreeting(null);
+    public void test_prepareGreeting_nullName_returnsFallbackName() {
+        var mockRepository = getMockRepository();
+        var service = new HelloService(mockRepository);
+        String result = service.prepareGreeting(null, "-1");
         String expected = "Hello " + HelloService.FALLBACK_NAME+"!";
         assertEquals(result, expected);
     }
 
+    private LangRepository getMockRepository() {
+        return new LangRepository() {
+            @Override
+            Optional<Lang> findById(Long id) {
+                return Optional.of(new Lang(null, WELCOME, "-1"));
+            }
+        };
+    }
+
     @Test
     public void test_prepareGreeting_name_returnsGreetingWithName() {
-        String name = "test";
-        String result = service.prepareGreeting(name);
+        var mockRepository = getMockRepository();
+        var service = new HelloService(mockRepository);
+        String result = service.prepareGreeting("test", "-1");
         String expected = "Hello test!";
         assertEquals(result, expected);
     }
+
+    @Test
+    public void test_prepareGreeting_nullLang_returnsGreetingWithFallbackLang() {
+        var mockRepository = fallbackLangIdRepository();
+        var service = new HelloService(mockRepository);
+        String result = service.prepareGreeting(null, null);
+        String expected = FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME+"!";
+        assertEquals(result, expected);
+    }
+
+    private LangRepository fallbackLangIdRepository() {
+        return new LangRepository() {
+            @Override
+            Optional<Lang> findById(Long id) {
+                if(id.equals(HelloService.FALLBACK_LANG.getId())) {
+
+                    return Optional.of(new Lang(null, FALLBACK_ID_WELCOME, null));
+                }
+                return Optional.empty();
+            }
+        };
+    }
+
+    @Test
+    public void test_prepareGreeting_notNumberLang_returnsGreetingWithFallbackLang() {
+        var mockRepository = fallbackLangIdRepository();
+        var service = new HelloService(mockRepository);
+        String result = service.prepareGreeting(null, "abc");
+        String expected = FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME+"!";
+        assertEquals(result, expected);
+    }
+    
 }
