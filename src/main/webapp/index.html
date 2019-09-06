@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO LIST</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+</head>
+<body>
+
+<form id="welcomeForm" class="pure-form" style="width: 40%; margin: 0 auto">
+    <input type="text"  name="name" class="pure-input-rounded" placeholder="name">
+    <label class="pure-radio">
+        <input type="radio" name="lang" value="1" checked>
+        🇺🇸
+    </label>
+
+    <label class="pure-radio">
+        <input type="radio" name="lang" value="2">
+        🇵🇱
+    </label>
+    <button id="btn" class="pure-button pure-button-primary">Go!</button>
+</form>
+<div id="welcome"></div>
+<script>
+    const form = document.getElementById('welcomeForm');
+    const div = document.getElementById('welcome');
+    document.getElementById('btn').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const formObj = {
+            name: form.elements.name.value,
+            lang: form.elements.lang.value
+        }
+        fetch('http://localhost:8080/api?' + new URLSearchParams(formObj))
+            .then((response) => response.text())
+            .then((text)=> {
+                div.innerHTML=`
+                    <h1>${text}</h1>>
+                `
+            });
+    })
+</script>
+</body>
+</html>
