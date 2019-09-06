@@ -15,14 +15,14 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
         var mockRepository = getMockRepository();
         var service = new HelloService(mockRepository);
         String result = service.prepareGreeting(null, "-1");
-        String expected = HelloService.FALLBACK_LANG.getWelcomeMessage() + " " + HelloService.FALLBACK_NAME+"!";
+        String expected = HelloService.FALLBACK_LANG.getWelcomeMsg() + " " + HelloService.FALLBACK_NAME+"!";
         assertEquals(result, expected);
     }
 
     private LangRepository getMockRepository() {
         return new LangRepository() {
             @Override
-            Optional<Lang> findById(Long id) {
+            Optional<Lang> findById(Integer id) {
                 return Optional.of(new Lang(null, WELCOME, "-1"));
             }
         };
@@ -33,7 +33,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
         var mockRepository = getMockRepository();
         var service = new HelloService(mockRepository);
         String result = service.prepareGreeting("test", "-1");
-        String expected = HelloService.FALLBACK_LANG.getWelcomeMessage() + " test!";
+        String expected = HelloService.FALLBACK_LANG.getWelcomeMsg() + " test!";
         assertEquals(result, expected);
     }
 
@@ -49,7 +49,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     private LangRepository fallbackLangIdRepository() {
         return new LangRepository() {
             @Override
-            Optional<Lang> findById(Long id) {
+            Optional<Lang> findById(Integer id) {
                 if(id.equals(HelloService.FALLBACK_LANG.getId())) {
 
                     return Optional.of(new Lang(null, FALLBACK_ID_WELCOME, null));
@@ -72,13 +72,13 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     public void test_prepareGreeting_nonExistingLang_returnsGreetingWithFallbackLang() {
         var mockRepository = new LangRepository() {
             @Override
-            Optional<Lang> findById(Long id) {
+            Optional<Lang> findById(Integer id) {
                 return Optional.empty();
             }
         };
         var service = new HelloService(mockRepository);
         String result = service.prepareGreeting(null, "2");
-        String expected = HelloService.FALLBACK_LANG.getWelcomeMessage() + " " + HelloService.FALLBACK_NAME+"!";
+        String expected = HelloService.FALLBACK_LANG.getWelcomeMsg() + " " + HelloService.FALLBACK_NAME+"!";
         assertEquals(result, expected);
     }
     

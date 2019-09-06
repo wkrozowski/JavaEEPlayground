@@ -15,6 +15,7 @@
         <junit.version>4.12</junit.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jetty.version>9.4.20.v20190813</jetty.version>
+        <h2.version>1.4.199</h2.version>
     </properties>
     <dependencies>
         <!-- testing -->
@@ -54,6 +55,18 @@
             <artifactId>jetty-annotations</artifactId>
             <version>${jetty.version}</version>
         </dependency>
+
+        <!-- database -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.4.Final</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -83,6 +96,15 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
+            </plugin>
+            <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>6.0.1</version>
+            <configuration>
+                <url>jdbc:h2:file:./db</url>
+                <user>sa</user>
+            </configuration>
             </plugin>
         </plugins>
     </build>

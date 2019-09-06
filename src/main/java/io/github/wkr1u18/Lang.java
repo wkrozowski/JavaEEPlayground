@@ -1,26 +1,45 @@
 package io.github.wkr1u18;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table( name = "languages" )
 class Lang {
-    private Long id ;
-    private String welcomeMessage;
+    @Id
+    @GeneratedValue(generator="inc")
+    @GenericGenerator(name="inc", strategy = "increment")
+    private Integer id ;
+    private String welcomeMsg;
     private String code;
 
-    Lang(Long id, String welcomeMessage, String code) {
+    /**
+     * Hibernate uses it.
+     */
+    @SuppressWarnings("unused")
+    Lang() {
+
+    }
+    Lang(Integer id, String welcomeMessage, String code) {
         this.id = id;
-        this.welcomeMessage = welcomeMessage;
+        this.welcomeMsg = welcomeMessage;
         this.code = code;
     }
 
-    Long getId() {
+    Integer getId() {
         return id;
     }
 
-    String getWelcomeMessage() {
-        return welcomeMessage;
+    String getWelcomeMsg() {
+        return welcomeMsg;
     }
 
-    void setWelcomeMessage(String welcomeMessage) {
-        this.welcomeMessage = welcomeMessage;
+    void setWelcomeMsg(String welcomeMessage) {
+        this.welcomeMsg = welcomeMessage;
     }
 
     String getCode() {
