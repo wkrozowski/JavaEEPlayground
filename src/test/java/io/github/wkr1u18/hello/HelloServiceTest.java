@@ -17,7 +17,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     public void test_prepareGreeting_nullName_returnsFallbackName() {
         var mockRepository = getMockRepository();
         var service = new HelloService(mockRepository);
-        String result = service.prepareGreeting(null, "-1");
+        String result = service.prepareGreeting(null, 1);
         String expected = HelloService.FALLBACK_LANG.getWelcomeMsg() + " " + HelloService.FALLBACK_NAME+"!";
         assertEquals(result, expected);
     }
@@ -35,7 +35,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     public void test_prepareGreeting_name_returnsGreetingWithName() {
         var mockRepository = getMockRepository();
         var service = new HelloService(mockRepository);
-        String result = service.prepareGreeting("test", "-1");
+        String result = service.prepareGreeting("test", 1);
         String expected = HelloService.FALLBACK_LANG.getWelcomeMsg() + " test!";
         assertEquals(result, expected);
     }
@@ -63,15 +63,6 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     }
 
     @Test
-    public void test_prepareGreeting_notNumberLang_returnsGreetingWithFallbackLang() {
-        var mockRepository = fallbackLangIdRepository();
-        var service = new HelloService(mockRepository);
-        String result = service.prepareGreeting(null, "abc");
-        String expected = FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME+"!";
-        assertEquals(result, expected);
-    }
-
-    @Test
     public void test_prepareGreeting_nonExistingLang_returnsGreetingWithFallbackLang() {
         var mockRepository = new LangRepository() {
             @Override
@@ -80,7 +71,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
             }
         };
         var service = new HelloService(mockRepository);
-        String result = service.prepareGreeting(null, "2");
+        String result = service.prepareGreeting(null, 2);
         String expected = HelloService.FALLBACK_LANG.getWelcomeMsg() + " " + HelloService.FALLBACK_NAME+"!";
         assertEquals(result, expected);
     }

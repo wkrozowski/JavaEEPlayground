@@ -33,7 +33,13 @@ public class HelloServlet extends HttpServlet {
         logger.info("Request got with parameters: " + req.getParameterMap());
         String nameParameter = req.getParameter(NAME_PARAM);
         String langParameter = req.getParameter(LANG_PARAM);
-        resp.getWriter().write(service.prepareGreeting(nameParameter, langParameter));
+        Integer langId = null;
+        try {
+            langId = Integer.valueOf(langParameter);
+        } catch (NumberFormatException nfe) {
+            logger.warn("Non-numeric lang id used " + langParameter);
+        }
+        resp.getWriter().write(service.prepareGreeting(nameParameter, langId));
     }
 
 }
