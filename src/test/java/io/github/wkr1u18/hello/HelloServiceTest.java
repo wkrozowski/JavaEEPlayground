@@ -1,6 +1,9 @@
-package io.github.wkr1u18;
+package io.github.wkr1u18.hello;
 
 
+import io.github.wkr1u18.hello.HelloService;
+import io.github.wkr1u18.lang.Lang;
+import io.github.wkr1u18.lang.LangRepository;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -22,7 +25,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     private LangRepository getMockRepository() {
         return new LangRepository() {
             @Override
-            Optional<Lang> findById(Integer id) {
+            public Optional<Lang> findById(Integer id) {
                 return Optional.of(new Lang(null, WELCOME, "-1"));
             }
         };
@@ -49,7 +52,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     private LangRepository fallbackLangIdRepository() {
         return new LangRepository() {
             @Override
-            Optional<Lang> findById(Integer id) {
+            public Optional<Lang> findById(Integer id) {
                 if(id.equals(HelloService.FALLBACK_LANG.getId())) {
 
                     return Optional.of(new Lang(null, FALLBACK_ID_WELCOME, null));
@@ -72,7 +75,7 @@ private final static String FALLBACK_ID_WELCOME = "Hola";
     public void test_prepareGreeting_nonExistingLang_returnsGreetingWithFallbackLang() {
         var mockRepository = new LangRepository() {
             @Override
-            Optional<Lang> findById(Integer id) {
+            public Optional<Lang> findById(Integer id) {
                 return Optional.empty();
             }
         };

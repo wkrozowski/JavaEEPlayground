@@ -1,4 +1,4 @@
-package io.github.wkr1u18;
+package io.github.wkr1u18.hello;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -24,11 +24,11 @@ public class HibernateUtil {
         }
     }
 
-    static SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
-    static void close() {
+    public static void close() {
         if ( sessionFactory != null ) {
             sessionFactory.close();
         }

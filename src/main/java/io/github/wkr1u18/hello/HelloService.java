@@ -1,5 +1,7 @@
-package io.github.wkr1u18;
+package io.github.wkr1u18.hello;
 
+import io.github.wkr1u18.lang.Lang;
+import io.github.wkr1u18.lang.LangRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

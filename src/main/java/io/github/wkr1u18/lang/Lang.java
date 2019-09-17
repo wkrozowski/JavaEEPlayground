@@ -1,4 +1,4 @@
-package io.github.wkr1u18;
+package io.github.wkr1u18.lang;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table( name = "languages" )
-class Lang {
+public class Lang {
     @Id
     @GeneratedValue(generator="inc")
     @GenericGenerator(name="inc", strategy = "increment")
@@ -24,17 +24,17 @@ class Lang {
     public Lang() {
 
     }
-    Lang(Integer id, String welcomeMessage, String code) {
+    public Lang(Integer id, String welcomeMessage, String code) {
         this.id = id;
         this.welcomeMsg = welcomeMessage;
         this.code = code;
     }
 
-    Integer getId() {
+    public Integer getId() {
         return id;
     }
 
-    String getWelcomeMsg() {
+    public String getWelcomeMsg() {
         return welcomeMsg;
     }
 
@@ -42,7 +42,7 @@ class Lang {
         this.welcomeMsg = welcomeMessage;
     }
 
-    String getCode() {
+    public String getCode() {
         return code;
     }
 

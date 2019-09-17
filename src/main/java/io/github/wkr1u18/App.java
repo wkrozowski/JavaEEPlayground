@@ -1,5 +1,6 @@
 package io.github.wkr1u18;
 
+import io.github.wkr1u18.hello.HibernateUtil;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
