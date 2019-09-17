@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="app" />
         <module name="JavaEEPlayground" />
+        <module name="app" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />

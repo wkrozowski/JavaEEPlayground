@@ -55,6 +55,7 @@ public class TodoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Todo newTodo = mapper.readValue(req.getInputStream(), Todo.class);
+        newTodo.setDone(false);
         mapper.writeValue(resp.getOutputStream(), repository.addTodo(newTodo));
     }
 }
